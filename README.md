@@ -143,6 +143,46 @@ Feb 23 13:09:05 ubuntu-focal root: Fri Feb 23 13:09:05 UTC 2024: I found word, M
 
 Наш сервис работает.
 
+## Подготовка к 2 и 3 заданию.
+
+В методичке к заданию используется Centos 7. \
+Из-за больших различий между Ubuntu 20 и Centos 7 сделаем вторую VM с этой ОС. \
+Отредактируем Vagrantfile.
+```
+
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+MACHINES = {
+  :otusubuntu=> {
+        :box_name => "ubuntu/focal64",
+        :vm_name => "otus",
+  },
+
+  :otuscentos => {
+        :box_name => "centos/7",
+        :vm_name => "otuscentos",
+  }
+
+}
+
+Vagrant.configure("2") do |config|
+
+  MACHINES.each do |boxname, boxconfig|
+    
+    config.vm.define boxname do |box|
+   
+      box.vm.box = boxconfig[:box_name]
+      box.vm.host_name = boxconfig[:vm_name]
+
+     end
+  end
+end
+```
+
+Всю дальнейшую часть задания будем выполнять в VM otuscentos с ОС Centos 7. 
+
+
 
 
 

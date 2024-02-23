@@ -1,15 +1,29 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-Vagrant.configure(2) do |config|
-  config.vm.box = "ubuntu/focal64"
-  config.vm.define "otus"
-  config.vm.hostname = "otus"
-  
-  config.vm.provider "virtualbox" do |v|
-    v.memory = 2048
-    v.cpus = 1
-  end
+MACHINES = {
+  :otus=> {
+        :box_name => "ubuntu/focal64",
+        :vm_name => "otus",
+  },
 
+  :otuscentos => {
+        :box_name => "centos/7",
+        :vm_name => "otuscentos",
+  }
+
+}
+
+Vagrant.configure("2") do |config|
+
+  MACHINES.each do |boxname, boxconfig|
+    
+    config.vm.define boxname do |box|
+   
+      box.vm.box = boxconfig[:box_name]
+      box.vm.host_name = boxconfig[:vm_name]
+
+     end
+  end
 end
 
